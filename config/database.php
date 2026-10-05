@@ -87,7 +87,8 @@ return [
         'pgsql' => [
             'driver' => 'pgsql',
             // Neon / Vercel Postgres: DATABASE_URL or POSTGRES_URL (postgres://user:pass@host/db?sslmode=require)
-            'url' => env('DATABASE_URL', env('POSTGRES_URL', env('DB_URL'))),
+            // Unpooled connection first: Neon's PgBouncer pooler breaks transactional DDL (migrations).
+            'url' => env('DATABASE_URL_UNPOOLED', env('DATABASE_URL', env('POSTGRES_URL', env('DB_URL')))),
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '5432'),
             'database' => env('DB_DATABASE', 'laravel'),
