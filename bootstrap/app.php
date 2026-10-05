@@ -21,6 +21,13 @@ $app = Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->trustProxies(at: '*');
+        // The locale cookie is not sensitive: keep it plain so it survives key rotation.
+        $middleware->encryptCookies(except: ['locale']);
+        // Global too, so error pages for unmatched routes (404) are localized from the cookie.
+        $middleware->append(\App\Http\Middleware\SetLocale::class);
+        $middleware->web(append: [
+            \App\Http\Middleware\SetLocale::class,
+        ]);
         $middleware->alias([
             'admin' => \App\Http\Middleware\EnsureAdmin::class,
         ]);

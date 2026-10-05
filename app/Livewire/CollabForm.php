@@ -39,7 +39,7 @@ class CollabForm extends Component
                 $isTg = preg_match('~^(@|https?://t\.me/)?[A-Za-z0-9_]{4,32}$~', $v);
                 $isPhone = preg_match('~^\+?[\d\s\-()]{7,20}$~', $v);
                 if (! $isEmail && ! $isTg && ! $isPhone) {
-                    $fail('Укажите email, Telegram (@username) или телефон.');
+                    $fail(__('Укажите email, Telegram (@username) или телефон.'));
                 }
             }],
             'company' => ['nullable', 'string', 'max:190'],
@@ -52,8 +52,8 @@ class CollabForm extends Component
     protected function validationAttributes(): array
     {
         return [
-            'name' => 'имя', 'contact' => 'контакт', 'company' => 'компания',
-            'type' => 'тип', 'budget' => 'бюджет', 'message' => 'сообщение',
+            'name' => __('имя'), 'contact' => __('контакт'), 'company' => __('компания'),
+            'type' => __('тип'), 'budget' => __('бюджет'), 'message' => __('сообщение'),
         ];
     }
 
@@ -75,7 +75,7 @@ class CollabForm extends Component
 
         $key = 'collab:'.request()->ip();
         if (RateLimiter::tooManyAttempts($key, 3)) {
-            $this->addError('message', 'Слишком много заявок. Попробуйте позже.');
+            $this->addError('message', __('Слишком много заявок. Попробуйте позже.'));
 
             return;
         }

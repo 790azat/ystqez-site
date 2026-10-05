@@ -30,16 +30,16 @@
             </h1>
             <p class="mt-6 max-w-xl text-base leading-relaxed text-ink-300 sm:text-lg">{{ setting('hero_subtitle') }}</p>
             <div class="mt-8 flex flex-wrap gap-3">
-                <a href="{{ route('videos.index') }}" class="btn btn-primary btn-lg"><x-icon name="play-fill" class="size-5"/> Смотреть выпуски</a>
-                <a href="{{ setting('youtube_url') }}" target="_blank" rel="noopener" class="btn btn-ghost btn-lg"><x-icon name="youtube" class="size-5 text-ember-400"/> Подписаться</a>
+                <a href="{{ route('videos.index') }}" class="btn btn-primary btn-lg"><x-icon name="play-fill" class="size-5"/> {{ __('Смотреть выпуски') }}</a>
+                <a href="{{ setting('youtube_url') }}" target="_blank" rel="noopener" class="btn btn-ghost btn-lg"><x-icon name="youtube" class="size-5 text-ember-400"/> {{ __('Подписаться') }}</a>
             </div>
             @php
                 $heroStats = array_values(array_filter([
-                    ['Выпусков', $stats['videos'] ? number_format($stats['videos'], 0, ',', ' ') : null],
-                    ['Подписчиков YouTube', $subs ? \App\Support\Ru::compact((int) $subs) : null],
-                    ['Подписчиков Instagram', $igFollowers ? \App\Support\Ru::compact((int) $igFollowers) : null],
-                    ['Просмотров', !$subs && $stats['views'] ? \App\Support\Ru::compact($stats['views']) : null],
-                    ['Лет дружбы', '7+'],
+                    [__('Выпусков'), $stats['videos'] ? number_format($stats['videos'], 0, ',', ' ') : null],
+                    [__('Подписчиков YouTube'), $subs ? compact_num((int) $subs) : null],
+                    [__('Подписчиков Instagram'), $igFollowers ? compact_num((int) $igFollowers) : null],
+                    [__('Просмотров'), !$subs && $stats['views'] ? compact_num($stats['views']) : null],
+                    [__('Лет дружбы'), '7+'],
                 ], fn ($s) => $s[1] !== null));
             @endphp
             <dl class="mt-10 grid max-w-xl grid-cols-2 gap-x-6 gap-y-5 border-t border-white/10 pt-6 {{ [1 => 'sm:grid-cols-1', 2 => 'sm:grid-cols-2', 3 => 'sm:grid-cols-3', 4 => 'sm:grid-cols-4'][min(count($heroStats), 4)] }}">
@@ -73,7 +73,7 @@
                                         <x-icon name="play-fill" class="size-7 translate-x-0.5"/>
                                     </span>
                                     <div class="absolute inset-x-0 bottom-0 p-4">
-                                        <span class="badge bg-ember-500 text-ink-950">Новое</span>
+                                        <span class="badge bg-ember-500 text-ink-950">{{ __('Новое') }}</span>
                                         <p class="mt-2 line-clamp-3 text-sm font-bold leading-snug">{{ $s->display_title }}</p>
                                     </div>
                                 @endif
@@ -91,9 +91,9 @@
                             <x-icon name="play-fill" class="size-8 translate-x-0.5"/>
                         </span>
                         <div class="absolute inset-x-0 bottom-0 p-5 sm:p-7">
-                            <span class="badge bg-ember-500 text-ink-950">Новый выпуск</span>
+                            <span class="badge bg-ember-500 text-ink-950">{{ __('Новый выпуск') }}</span>
                             <h2 class="mt-3 line-clamp-2 font-sans text-lg font-bold leading-snug sm:text-2xl">{{ $featured->display_title }}</h2>
-                            <p class="mt-2 text-xs text-ink-300">{{ $featured->published_at?->translatedFormat('j F Y') }}@if($featured->duration_human) · {{ $featured->duration_human }}@endif</p>
+                            <p class="mt-2 text-xs text-ink-300">{{ fdate($featured->published_at, 'long') }}@if($featured->duration_human) · {{ $featured->duration_human }}@endif</p>
                         </div>
                     </div>
                 </a>
@@ -101,9 +101,9 @@
                 <div class="card noise relative overflow-hidden p-8 sm:p-10">
                     <div class="absolute -right-10 -top-10 size-48 rounded-full bg-ember-500/20 blur-3xl"></div>
                     <x-icon name="mic" class="size-10 text-ember-400"/>
-                    <h2 class="mt-6 text-2xl font-semibold">Новые разговоры — уже в пути</h2>
-                    <p class="mt-3 text-ink-300">Выпуски появятся здесь, как только мы синхронизируем канал. А пока — загляните на YouTube.</p>
-                    <a href="{{ setting('youtube_url') }}" target="_blank" rel="noopener" class="btn btn-primary mt-6"><x-icon name="youtube" class="size-5"/> Открыть канал</a>
+                    <h2 class="mt-6 text-2xl font-semibold">{{ __('Новые разговоры — уже в пути') }}</h2>
+                    <p class="mt-3 text-ink-300">{{ __('Выпуски появятся здесь, как только мы синхронизируем канал. А пока — загляните на YouTube.') }}</p>
+                    <a href="{{ setting('youtube_url') }}" target="_blank" rel="noopener" class="btn btn-primary mt-6"><x-icon name="youtube" class="size-5"/> {{ __('Открыть канал') }}</a>
                 </div>
             @endif
         </div>
@@ -113,7 +113,7 @@
 {{-- ============ LATEST ============ --}}
 @if($shorts->isNotEmpty())
 <section class="container-yq mt-8">
-    <x-section-head kicker="Свежее" title="Новые выпуски" :href="route('videos.index')" />
+    <x-section-head kicker="{{ __('Свежее') }}" title="{{ __('Новые выпуски') }}" :href="route('videos.index')" />
     <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 xl:grid-cols-6">
         @foreach($shorts as $video)
             <x-video-card :video="$video" />
@@ -124,7 +124,7 @@
 
 @if($longs->isNotEmpty())
 <section class="container-yq {{ $shorts->isNotEmpty() ? 'mt-24' : 'mt-8' }}">
-    <x-section-head kicker="Длинные разговоры" title="Выпуски" :href="route('videos.index', ['type' => 'video'])" />
+    <x-section-head kicker="{{ __('Длинные разговоры') }}" title="{{ __('Выпуски') }}" :href="route('videos.index', ['type' => 'video'])" />
     <div class="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
         @foreach($longs as $video)
             <x-video-card :video="$video" />
@@ -135,7 +135,7 @@
 
 @if($shorts->isEmpty() && $longs->isEmpty() && !$featured)
 <section class="container-yq mt-8">
-    <x-empty icon="film" title="Здесь скоро будут выпуски" text="Мы готовим каталог разговоров. Подпишитесь на канал, чтобы не пропустить новые.">
+    <x-empty icon="film" title="{{ __('Здесь скоро будут выпуски') }}" text="{{ __('Мы готовим каталог разговоров. Подпишитесь на канал, чтобы не пропустить новые.') }}">
         <a href="{{ setting('youtube_url') }}" target="_blank" rel="noopener" class="btn btn-ghost"><x-icon name="youtube" class="size-4"/> YouTube</a>
     </x-empty>
 </section>
@@ -145,11 +145,11 @@
 <section class="container-yq mt-24 grid gap-6 lg:grid-cols-[1.2fr_1fr]">
     <div class="card noise relative overflow-hidden p-8 sm:p-10">
         <div class="absolute -left-16 -top-16 size-56 rounded-full bg-sun-500/10 blur-3xl"></div>
-        <p class="kicker"><span class="h-px w-6 bg-ember-500"></span>Кто мы</p>
-        <h2 class="mt-3 text-3xl font-semibold">Друзья, дорога и <span class="gradient-text">долгие разговоры</span></h2>
+        <p class="kicker"><span class="h-px w-6 bg-ember-500"></span>{{ __('Кто мы') }}</p>
+        <h2 class="mt-3 text-3xl font-semibold">{!! __('Друзья, дорога и :highlight', ['highlight' => '<span class="gradient-text">'.e(__('долгие разговоры')).'</span>']) !!}</h2>
         <p class="mt-5 leading-relaxed text-ink-300">{{ setting('about_text') }}</p>
         <div class="mt-8 grid gap-4 sm:grid-cols-3">
-            @foreach([['compass', 'В дороге', 'Записываем разговоры там, куда приводят путешествия'], ['mic', 'Без сценария', 'Живой диалог вместо интервью по бумажке'], ['book', 'Про смыслы', 'Идеи, книги, люди и то, что между строк']] as [$icon, $h, $t])
+            @foreach([['compass', __('В дороге'), __('Записываем разговоры там, куда приводят путешествия')], ['mic', __('Без сценария'), __('Живой диалог вместо интервью по бумажке')], ['book', __('Про смыслы'), __('Идеи, книги, люди и то, что между строк')]] as [$icon, $h, $t])
                 <div class="rounded-2xl bg-white/[.03] p-4 ring-1 ring-white/5">
                     <x-icon :name="$icon" class="size-5 text-ember-400"/>
                     <h3 class="mt-3 font-sans text-sm font-bold">{{ $h }}</h3>
@@ -163,7 +163,7 @@
         <div class="flex items-center justify-between">
             <div>
                 <p class="kicker"><span class="size-2 rounded-full bg-emerald-400 animate-pulse-dot"></span>Live</p>
-                <h2 class="mt-2 text-2xl font-semibold">Живой чат</h2>
+                <h2 class="mt-2 text-2xl font-semibold">{{ __('Живой чат') }}</h2>
             </div>
             <x-icon name="chat" class="size-8 text-ink-600"/>
         </div>
@@ -177,16 +177,16 @@
                     </div>
                 </div>
             @empty
-                <p class="rounded-2xl bg-white/[.03] p-5 text-sm text-ink-400">В чате пока тихо. Будьте первым, кто скажет «привет» 👋</p>
+                <p class="rounded-2xl bg-white/[.03] p-5 text-sm text-ink-400">{{ __('В чате пока тихо. Будьте первым, кто скажет «привет» 👋') }}</p>
             @endforelse
         </div>
-        <a href="{{ route('chat') }}" class="btn btn-primary mt-6 w-full"><x-icon name="chat" class="size-4"/> Войти в чат</a>
+        <a href="{{ route('chat') }}" class="btn btn-primary mt-6 w-full"><x-icon name="chat" class="size-4"/> {{ __('Войти в чат') }}</a>
     </div>
 </section>
 
 {{-- ============ FORUM ============ --}}
 <section class="container-yq mt-24">
-    <x-section-head kicker="Сообщество" title="Обсуждают на форуме" :href="route('forum.index')" link="Весь форум" />
+    <x-section-head kicker="{{ __('Сообщество') }}" title="{{ __('Обсуждают на форуме') }}" :href="route('forum.index')" link="{{ __('Весь форум') }}" />
     @if($topics->isNotEmpty())
         <div class="card divide-y divide-white/5">
             @foreach($topics as $topic)
@@ -196,7 +196,7 @@
                         <h3 class="truncate font-sans font-bold group-hover:text-white">
                             @if($topic->is_pinned)<x-icon name="pin" class="mr-1 inline size-4 text-sun-400"/>@endif{{ $topic->title }}
                         </h3>
-                        <p class="mt-0.5 text-xs text-ink-400">{{ $topic->category?->name }} · {{ $topic->user?->name ?? 'Гость' }} · {{ $topic->last_post_at?->diffForHumans() }}</p>
+                        <p class="mt-0.5 text-xs text-ink-400">{{ $topic->category?->name }} · {{ $topic->user?->name ?? __('Гость') }} · {{ $topic->last_post_at?->diffForHumans() }}</p>
                     </div>
                     <span class="hidden shrink-0 items-center gap-1.5 rounded-full bg-white/5 px-3 py-1 text-xs font-semibold text-ink-300 sm:inline-flex">
                         <x-icon name="reply" class="size-3.5"/> {{ $topic->replies_count }}
@@ -205,15 +205,15 @@
             @endforeach
         </div>
     @else
-        <x-empty icon="users" title="Форум ждёт первую тему" text="Предложите идею выпуска, поделитесь книгой или расскажите о путешествии.">
-            <a href="{{ route('forum.index') }}" class="btn btn-primary">Открыть форум</a>
+        <x-empty icon="users" title="{{ __('Форум ждёт первую тему') }}" text="{{ __('Предложите идею выпуска, поделитесь книгой или расскажите о путешествии.') }}">
+            <a href="{{ route('forum.index') }}" class="btn btn-primary">{{ __('Открыть форум') }}</a>
         </x-empty>
     @endif
 </section>
 
 {{-- ============ INSTAGRAM ============ --}}
 <section class="container-yq mt-24">
-    <x-section-head kicker="{{ '@'.config('site.instagram_handle') }}" title="Из Instagram" :href="route('instagram')" link="Все публикации" />
+    <x-section-head kicker="{{ '@'.config('site.instagram_handle') }}" title="{{ __('Из Instagram') }}" :href="route('instagram')" link="{{ __('Все публикации') }}" />
     @if($instagram->isNotEmpty())
         <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
             @foreach($instagram as $post)
@@ -221,8 +221,8 @@
             @endforeach
         </div>
     @else
-        <x-empty icon="instagram" title="Кадры из поездок" text="Фото и закулисье — в нашем Instagram.">
-            <a href="{{ setting('instagram_url') }}" target="_blank" rel="noopener" class="btn btn-ghost"><x-icon name="instagram" class="size-4"/> Открыть Instagram</a>
+        <x-empty icon="instagram" title="{{ __('Кадры из поездок') }}" text="{{ __('Фото и закулисье — в нашем Instagram.') }}">
+            <a href="{{ setting('instagram_url') }}" target="_blank" rel="noopener" class="btn btn-ghost"><x-icon name="instagram" class="size-4"/> {{ __('Открыть Instagram') }}</a>
         </x-empty>
     @endif
 </section>
@@ -233,13 +233,13 @@
         <div class="absolute -right-24 -top-24 size-80 rounded-full bg-white/20 blur-3xl"></div>
         <div class="relative grid items-center gap-8 lg:grid-cols-[1.5fr_1fr]">
             <div>
-                <p class="text-xs font-bold uppercase tracking-[.2em] opacity-70">Сотрудничество</p>
-                <h2 class="mt-3 text-3xl font-semibold leading-tight sm:text-4xl">Хотите сделать что-то вместе?</h2>
-                <p class="mt-4 max-w-xl font-medium opacity-80">Реклама, нативная интеграция, приглашение в гости или совместный проект — расскажите о своей идее, и мы ответим.</p>
+                <p class="text-xs font-bold uppercase tracking-[.2em] opacity-70">{{ __('Сотрудничество') }}</p>
+                <h2 class="mt-3 text-3xl font-semibold leading-tight sm:text-4xl">{{ __('Хотите сделать что-то вместе?') }}</h2>
+                <p class="mt-4 max-w-xl font-medium opacity-80">{{ __('Реклама, нативная интеграция, приглашение в гости или совместный проект — расскажите о своей идее, и мы ответим.') }}</p>
             </div>
             <div class="flex flex-wrap gap-3 lg:justify-end">
-                <a href="{{ route('collab') }}" class="btn btn-lg bg-ink-950 text-white hover:bg-ink-800">Оставить заявку <x-icon name="arrow-right" class="size-5"/></a>
-                <a href="{{ route('collab', ['type' => 'guest']) }}" class="btn btn-lg bg-white/25 text-ink-950 hover:bg-white/40">Стать гостем</a>
+                <a href="{{ route('collab') }}" class="btn btn-lg bg-ink-950 text-white hover:bg-ink-800">{{ __('Оставить заявку') }} <x-icon name="arrow-right" class="size-5"/></a>
+                <a href="{{ route('collab', ['type' => 'guest']) }}" class="btn btn-lg bg-white/25 text-ink-950 hover:bg-white/40">{{ __('Стать гостем') }}</a>
             </div>
         </div>
     </div>

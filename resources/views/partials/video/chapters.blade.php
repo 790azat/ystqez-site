@@ -1,6 +1,6 @@
             @if($chapters)
                 <div class="card p-5">
-                    <h2 class="flex items-center gap-2 font-sans text-sm font-bold uppercase tracking-wider text-ink-400"><x-icon name="list" class="size-4"/> Таймкоды</h2>
+                    <h2 class="flex items-center gap-2 font-sans text-sm font-bold uppercase tracking-wider text-ink-400"><x-icon name="list" class="size-4"/> {{ __('Таймкоды') }}</h2>
                     <ol class="mt-3 max-h-80 space-y-0.5 overflow-y-auto pr-1">
                         @foreach($chapters as $ch)
                             <li>

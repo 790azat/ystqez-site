@@ -24,7 +24,7 @@ class AuthController extends Controller
         ]);
 
         if (! Auth::attempt($data, $request->boolean('remember'))) {
-            return back()->withErrors(['email' => 'Неверный email или пароль.'])->onlyInput('email');
+            return back()->withErrors(['email' => __('auth.failed')])->onlyInput('email');
         }
 
         $request->session()->regenerate();
@@ -55,7 +55,7 @@ class AuthController extends Controller
         Auth::login($user, true);
         $request->session()->regenerate();
 
-        return redirect()->intended(route('forum.index'))->with('status', 'Добро пожаловать, '.$user->name.'!');
+        return redirect()->intended(route('forum.index'))->with('status', __('Добро пожаловать, :name!', ['name' => $user->name]));
     }
 
     protected function rememberPrevious(): void

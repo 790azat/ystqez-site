@@ -23,11 +23,11 @@ class CollabRequest extends Model
 
     public function getTypeLabelAttribute(): string
     {
-        return self::TYPES[$this->type] ?? $this->type;
+        return isset(self::TYPES[$this->type]) ? __(self::TYPES[$this->type]) : (string) $this->type;
     }
 
     public function getStatusLabelAttribute(): string
     {
-        return self::STATUSES[$this->status] ?? $this->status;
+        return isset(self::STATUSES[$this->status]) ? __(self::STATUSES[$this->status]) : (string) $this->status;
     }
 }

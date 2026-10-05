@@ -21,6 +21,6 @@ class VideoComment extends Model
 
     public function getAuthorNameAttribute(): string
     {
-        return $this->user?->name ?? ($this->guest_name ?: 'Гость');
+        return $this->user?->name ?? ($this->guest_name ?: __('Гость'));
     }
 }

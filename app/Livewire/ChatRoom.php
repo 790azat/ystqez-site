@@ -40,7 +40,7 @@ class ChatRoom extends Component
 
     public function setNickname(): void
     {
-        $this->validate(['nickname' => ['required', 'string', 'min:2', 'max:30', 'regex:/^[\pL\pN _.\-]+$/u']], [], ['nickname' => 'ник']);
+        $this->validate(['nickname' => ['required', 'string', 'min:2', 'max:30', 'regex:/^[\pL\pN _.\-]+$/u']], [], ['nickname' => __('ник')]);
         Visitor::rememberNickname(trim($this->nickname));
     }
 
@@ -51,16 +51,16 @@ class ChatRoom extends Component
         }
         $nick = auth()->user()?->name ?? session('guest_nickname');
         if (! $nick) {
-            $this->addError('nickname', 'Сначала укажите ник.');
+            $this->addError('nickname', __('Сначала укажите ник.'));
 
             return;
         }
 
-        $this->validate(['body' => ['required', 'string', 'max:500']], [], ['body' => 'сообщение']);
+        $this->validate(['body' => ['required', 'string', 'max:500']], [], ['body' => __('сообщение')]);
 
         $key = 'chat:'.(auth()->id() ?? request()->ip());
         if (RateLimiter::tooManyAttempts($key, 5)) {
-            $this->addError('body', 'Не так быстро! Подождите '.RateLimiter::availableIn($key).' сек.');
+            $this->addError('body', __('Не так быстро! Подождите :seconds сек.', ['seconds' => RateLimiter::availableIn($key)]));
 
             return;
         }

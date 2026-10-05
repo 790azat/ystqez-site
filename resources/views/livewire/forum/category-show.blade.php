@@ -1,5 +1,5 @@
 <div class="container-yq pt-10">
-    <nav class="mb-5 flex items-center gap-2 text-sm text-ink-400"><a href="{{ route('forum.index') }}" class="hover:text-white">Форум</a><span>/</span><span class="text-ink-300">{{ $category->name }}</span></nav>
+    <nav class="mb-5 flex items-center gap-2 text-sm text-ink-400"><a href="{{ route('forum.index') }}" class="hover:text-white">{{ __('Форум') }}</a><span>/</span><span class="text-ink-300">{{ $category->name }}</span></nav>
     <div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div class="flex items-center gap-4">
             <span class="grid size-16 place-items-center rounded-2xl bg-white/5 text-3xl ring-1 ring-white/10">{{ $category->emoji ?: '💬' }}</span>
@@ -9,24 +9,24 @@
             </div>
         </div>
         @unless($showForm)
-            <button wire:click="openForm" class="btn btn-primary"><x-icon name="plus" class="size-4"/> Новая тема</button>
+            <button wire:click="openForm" class="btn btn-primary"><x-icon name="plus" class="size-4"/> {{ __('Новая тема') }}</button>
         @endunless
     </div>
 
     @if($showForm)
         <form wire:submit="create" class="card mt-8 space-y-4 p-6 animate-fade-up">
-            <h2 class="font-display text-lg font-semibold">Новая тема</h2>
+            <h2 class="font-display text-lg font-semibold">{{ __('Новая тема') }}</h2>
             <div>
-                <input type="text" wire:model="title" class="input text-base font-semibold" placeholder="Заголовок темы" maxlength="200">
+                <input type="text" wire:model="title" class="input text-base font-semibold" placeholder="{{ __('Заголовок темы') }}" maxlength="200">
                 @error('title')<p class="error">{{ $message }}</p>@enderror
             </div>
             <div>
-                <textarea wire:model="body" rows="7" class="input" placeholder="Расскажите подробнее…"></textarea>
+                <textarea wire:model="body" rows="7" class="input" placeholder="{{ __('Расскажите подробнее…') }}"></textarea>
                 @error('body')<p class="error">{{ $message }}</p>@enderror
             </div>
             <div class="flex justify-end gap-2">
-                <button type="button" wire:click="$set('showForm', false)" class="btn btn-ghost">Отмена</button>
-                <button type="submit" class="btn btn-primary" wire:loading.attr="disabled"><x-icon name="send" class="size-4"/> Опубликовать</button>
+                <button type="button" wire:click="$set('showForm', false)" class="btn btn-ghost">{{ __('Отмена') }}</button>
+                <button type="submit" class="btn btn-primary" wire:loading.attr="disabled"><x-icon name="send" class="size-4"/> {{ __('Опубликовать') }}</button>
             </div>
         </form>
     @endif
@@ -43,7 +43,7 @@
                                 @if($t->is_locked)<x-icon name="lock" class="size-4 shrink-0 text-ink-400"/>@endif
                                 <span class="truncate">{{ $t->title }}</span>
                             </h3>
-                            <p class="mt-0.5 text-xs text-ink-400">{{ $t->user?->name ?? 'Удалённый пользователь' }} · {{ $t->created_at->translatedFormat('j M Y') }}</p>
+                            <p class="mt-0.5 text-xs text-ink-400">{{ $t->user?->name ?? __('Удалённый пользователь') }} · {{ fdate($t->created_at, 'short') }}</p>
                         </div>
                         <div class="hidden shrink-0 gap-5 text-center text-xs text-ink-400 sm:flex">
                             <span class="inline-flex items-center gap-1"><x-icon name="reply" class="size-3.5"/> {{ $t->replies_count }}</span>
@@ -55,8 +55,8 @@
             </div>
             {{ $topics->links() }}
         @else
-            <x-empty icon="chat" title="В этом разделе пока нет тем" text="Станьте первым, кто начнёт разговор.">
-                <button wire:click="openForm" class="btn btn-primary"><x-icon name="plus" class="size-4"/> Создать тему</button>
+            <x-empty icon="chat" title="{{ __('В этом разделе пока нет тем') }}" text="{{ __('Станьте первым, кто начнёт разговор.') }}">
+                <button wire:click="openForm" class="btn btn-primary"><x-icon name="plus" class="size-4"/> {{ __('Создать тему') }}</button>
             </x-empty>
         @endif
     </div>

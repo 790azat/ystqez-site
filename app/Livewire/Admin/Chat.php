@@ -23,7 +23,7 @@ class Chat extends Component
     public function purgeOld(): void
     {
         $n = ChatMessage::where('created_at', '<', now()->subDays(30))->delete();
-        session()->flash('ok', "Удалено сообщений старше 30 дней: {$n}");
+        session()->flash('ok', __('Удалено сообщений старше 30 дней: :n', ['n' => $n]));
     }
 
     public function render()

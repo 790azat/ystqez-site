@@ -48,7 +48,7 @@ class YouTubeService
         $channelId ??= self::CHANNEL_ID;
         $response = Http::timeout(10)->get('https://www.youtube.com/feeds/videos.xml', ['channel_id' => $channelId]);
         if (! $response->successful()) {
-            throw new RuntimeException('YouTube вернул статус '.$response->status());
+            throw new RuntimeException('YouTube returned HTTP '.$response->status());
         }
 
         return $this->importRss($response->body());
@@ -61,7 +61,7 @@ class YouTubeService
         $feed = simplexml_load_string($xml);
         libxml_use_internal_errors($previous);
         if ($feed === false) {
-            throw new RuntimeException('Не удалось разобрать RSS');
+            throw new RuntimeException('Could not parse YouTube RSS feed');
         }
 
         $created = $updated = 0;

@@ -20,10 +20,10 @@ class SetupController extends Controller
             Artisan::call('db:seed', ['--force' => true]);
             $log[] = trim(Artisan::output());
             $status = 200;
-            $log[] = 'Готово ✔';
+            $log[] = 'Done ✔';
         } catch (Throwable $e) {
             $status = 500;
-            $log[] = 'Ошибка: '.$e->getMessage();
+            $log[] = 'Error: '.$e->getMessage();
         }
 
         return response(implode("\n\n", $log), $status)

@@ -35,3 +35,25 @@ if (! function_exists('media_url')) {
         return $cdn !== '' ? $cdn.'/'.$path : asset($path);
     }
 }
+
+if (! function_exists('fdate')) {
+    /** Localized date: styles short | long | datetime | short_datetime | numeric. */
+    function fdate(?\Carbon\CarbonInterface $date, string $style = 'long'): string
+    {
+        return \App\Support\Locale::date($date, $style);
+    }
+}
+
+if (! function_exists('num')) {
+    function num(int|float|null $n): string
+    {
+        return \App\Support\Locale::number($n);
+    }
+}
+
+if (! function_exists('compact_num')) {
+    function compact_num(int|float|null $n): string
+    {
+        return \App\Support\Locale::compact($n);
+    }
+}

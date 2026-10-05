@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+/** @deprecated kept for backwards compatibility; use trans_choice() and App\Support\Locale. */
 class Ru
 {
     /** @param array{0:string,1:string,2:string} $forms */
@@ -24,17 +25,6 @@ class Ru
 
     public static function compact(int|float|null $n): string
     {
-        $n = (float) ($n ?? 0);
-        if ($n >= 1_000_000) {
-            return rtrim(rtrim(number_format($n / 1_000_000, 1, ',', ''), '0'), ',').' млн';
-        }
-        if ($n >= 1_000 && $n < 10_000) {
-            return number_format($n, 0, ',', ' ');
-        }
-        if ($n >= 1_000) {
-            return rtrim(rtrim(number_format($n / 1_000, 1, ',', ''), '0'), ',').' тыс.';
-        }
-
-        return (string) (int) $n;
+        return Locale::compact($n);
     }
 }

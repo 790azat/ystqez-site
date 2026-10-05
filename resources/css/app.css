@@ -6,8 +6,8 @@
 @source '../../app/**/*.php';
 
 @theme {
-    --font-sans: 'Manrope', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-    --font-display: 'Unbounded', 'Manrope', ui-sans-serif, system-ui, sans-serif;
+    --font-sans: 'Manrope', 'Noto Sans Armenian', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-display: 'Unbounded', 'Noto Sans Armenian', 'Manrope', ui-sans-serif, system-ui, sans-serif;
 
     --color-ink-950: #08080a;
     --color-ink-900: #0e0e12;

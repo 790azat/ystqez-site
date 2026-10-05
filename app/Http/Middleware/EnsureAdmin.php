@@ -13,7 +13,7 @@ class EnsureAdmin
         if (! $request->user()) {
             return redirect()->guest(route('login'));
         }
-        abort_unless($request->user()->is_admin, 403, 'Доступ только для администраторов');
+        abort_unless($request->user()->is_admin, 403, __('Доступ только для администраторов'));
 
         return $next($request);
     }

@@ -5,7 +5,7 @@
                     {!! $video->description_html !!}
                 </div>
                 <button x-cloak x-show="long" @click="full = !full" class="mt-3 text-sm font-bold text-ember-300 hover:text-ember-400"
-                        x-text="full ? 'Свернуть' : 'Показать полностью'"></button>
+                        x-text="full ? {{ \Illuminate\Support\Js::from(__('Свернуть')) }} : {{ \Illuminate\Support\Js::from(__('Показать полностью')) }}"></button>
                 @if($video->tags)
                     <div class="mt-5 flex flex-wrap gap-2 border-t border-white/5 pt-5">
                         @foreach(array_slice($video->tags, 0, 20) as $tag)

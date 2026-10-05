@@ -50,7 +50,7 @@ document.addEventListener('click', (e) => {
     if (copy) {
         e.preventDefault();
         const text = copy.dataset.copy || window.location.href;
-        const done = () => window.dispatchEvent(new CustomEvent('toast', { detail: { message: 'Ссылка скопирована' } }));
+        const done = () => window.dispatchEvent(new CustomEvent('toast', { detail: { message: copy.dataset.copied || 'Link copied' } }));
         if (navigator.clipboard) {
             navigator.clipboard.writeText(text).then(done).catch(() => {});
         } else {

@@ -31,16 +31,16 @@ class TopicShow extends Component
         abort_unless(auth()->check(), 403);
         $this->topic->refresh();
         if ($this->topic->is_locked && ! auth()->user()->is_admin) {
-            $this->addError('body', 'Тема закрыта для ответов.');
+            $this->addError('body', __('Тема закрыта для ответов.'));
 
             return;
         }
 
-        $this->validate(['body' => ['required', 'string', 'min:2', 'max:10000']], [], ['body' => 'ответ']);
+        $this->validate(['body' => ['required', 'string', 'min:2', 'max:10000']], [], ['body' => __('ответ')]);
 
         $key = 'reply:'.auth()->id();
         if (RateLimiter::tooManyAttempts($key, 6)) {
-            $this->addError('body', 'Слишком часто. Подождите '.RateLimiter::availableIn($key).' сек.');
+            $this->addError('body', __('Слишком часто. Подождите :seconds сек.', ['seconds' => RateLimiter::availableIn($key)]));
 
             return;
         }
@@ -53,7 +53,7 @@ class TopicShow extends Component
 
         $posts = $this->topic->posts()->count();
         $this->gotoPage((int) ceil($posts / 15));
-        $this->dispatch('toast', message: 'Ответ опубликован');
+        $this->dispatch('toast', message: __('Ответ опубликован'));
     }
 
     public function togglePin(): void
@@ -89,6 +89,6 @@ class TopicShow extends Component
         return view('livewire.forum.topic-show', [
             'posts' => $this->topic->posts()->with('user')->oldest('id')->paginate(15),
             'firstPostId' => $this->topic->posts()->oldest('id')->value('id'),
-        ])->title($this->topic->title.' — Форум');
+        ])->title($this->topic->title.' — '.__('Форум'));
     }
 }

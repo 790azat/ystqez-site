@@ -24,14 +24,14 @@ class Dashboard extends Component
     {
         return view('livewire.admin.dashboard', [
             'stats' => [
-                ['Видео', Video::count(), route('admin.videos')],
-                ['Заявки (новые)', CollabRequest::where('status', 'new')->count(), route('admin.collabs')],
-                ['Пользователи', User::count(), route('admin.users')],
-                ['Темы форума', ForumTopic::count(), route('admin.forum')],
-                ['Сообщения форума', ForumPost::count(), route('admin.forum')],
-                ['Чат (24 ч)', ChatMessage::where('created_at', '>=', now()->subDay())->count(), route('admin.chat')],
-                ['Комментарии', VideoComment::count(), route('admin.comments')],
-                ['Посты Instagram', InstagramPost::count(), route('instagram')],
+                [__('Видео'), Video::count(), route('admin.videos')],
+                [__('Заявки (новые)'), CollabRequest::where('status', 'new')->count(), route('admin.collabs')],
+                [__('Пользователи'), User::count(), route('admin.users')],
+                [__('Темы форума'), ForumTopic::count(), route('admin.forum')],
+                [__('Сообщения форума'), ForumPost::count(), route('admin.forum')],
+                [__('Чат (24 ч)'), ChatMessage::where('created_at', '>=', now()->subDay())->count(), route('admin.chat')],
+                [__('Комментарии'), VideoComment::count(), route('admin.comments')],
+                [__('Посты Instagram'), InstagramPost::count(), route('instagram')],
             ],
             'collabs' => CollabRequest::latest()->take(5)->get(),
             'comments' => VideoComment::with(['video', 'user'])->latest()->take(5)->get(),

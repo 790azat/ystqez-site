@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
@@ -16,13 +15,13 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        Carbon::setLocale(config('app.locale', 'ru'));
+        \App\Support\Locale::apply(\App\Support\Locale::default());
 
         if ($this->app->environment('production')) {
             URL::forceScheme('https');
         }
 
-        \Livewire\Livewire::addPersistentMiddleware([\App\Http\Middleware\EnsureAdmin::class]);
+        \Livewire\Livewire::addPersistentMiddleware([\App\Http\Middleware\EnsureAdmin::class, \App\Http\Middleware\SetLocale::class]);
 
         Paginator::defaultView('partials.pagination');
         Paginator::defaultSimpleView('partials.pagination');

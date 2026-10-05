@@ -23,6 +23,10 @@ class Forum extends Component
 
     public string $catEmoji = '💬';
 
+    public string $catNameHy = '';
+
+    public string $catNameEn = '';
+
     public function togglePin(int $id): void
     {
         $t = ForumTopic::findOrFail($id);
@@ -38,7 +42,7 @@ class Forum extends Component
     public function deleteTopic(int $id): void
     {
         ForumTopic::whereKey($id)->delete();
-        session()->flash('ok', 'Тема удалена');
+        session()->flash('ok', __('Тема удалена'));
     }
 
     public function addCategory(): void
@@ -47,7 +51,9 @@ class Forum extends Component
             'catName' => ['required', 'string', 'max:120'],
             'catDescription' => ['nullable', 'string', 'max:500'],
             'catEmoji' => ['nullable', 'string', 'max:16'],
-        ], [], ['catName' => 'название']);
+            'catNameHy' => ['nullable', 'string', 'max:120'],
+            'catNameEn' => ['nullable', 'string', 'max:120'],
+        ], [], ['catName' => __('название')]);
 
         $slug = Str::slug($this->catName) ?: 'cat';
         $base = $slug;
@@ -58,15 +64,18 @@ class Forum extends Component
         ForumCategory::create([
             'name' => $this->catName, 'slug' => $slug, 'description' => $this->catDescription,
             'emoji' => $this->catEmoji, 'sort' => (int) ForumCategory::max('sort') + 1,
+            'name_translations' => array_filter([
+                'hy' => trim($this->catNameHy), 'ru' => trim($this->catName), 'en' => trim($this->catNameEn),
+            ], 'strlen') ?: null,
         ]);
-        $this->reset('catName', 'catDescription');
-        session()->flash('ok', 'Категория добавлена');
+        $this->reset('catName', 'catNameHy', 'catNameEn', 'catDescription');
+        session()->flash('ok', __('Категория добавлена'));
     }
 
     public function deleteCategory(int $id): void
     {
         ForumCategory::whereKey($id)->delete();
-        session()->flash('ok', 'Категория удалена вместе с темами');
+        session()->flash('ok', __('Категория удалена вместе с темами'));
     }
 
     public function render()

@@ -101,7 +101,7 @@ class PagesTest extends TestCase
 
         config(['site.setup_token' => 'secret-token', 'site.admin_email' => 'boss@example.com', 'site.admin_password' => 'pass12345']);
         $this->get('/_setup/wrong')->assertNotFound();
-        $this->get('/_setup/secret-token')->assertOk()->assertSee('Готово');
+        $this->get('/_setup/secret-token')->assertOk()->assertSee('Done');
         $this->get('/_setup/secret-token')->assertOk(); // idempotent
 
         $this->assertTrue(User::where('email', 'boss@example.com')->value('is_admin'));

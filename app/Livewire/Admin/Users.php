@@ -27,7 +27,7 @@ class Users extends Component
     public function toggleAdmin(int $id): void
     {
         if ($id === auth()->id()) {
-            session()->flash('error', 'Нельзя снять права администратора с самого себя.');
+            session()->flash('error', __('Нельзя снять права администратора с самого себя.'));
 
             return;
         }
@@ -41,7 +41,7 @@ class Users extends Component
             return;
         }
         User::whereKey($id)->delete();
-        session()->flash('ok', 'Пользователь удалён');
+        session()->flash('ok', __('Пользователь удалён'));
     }
 
     public function render()

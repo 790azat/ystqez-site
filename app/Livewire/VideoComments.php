@@ -35,7 +35,7 @@ class VideoComments extends Component
 
     protected function validationAttributes(): array
     {
-        return ['name' => 'имя', 'body' => 'комментарий'];
+        return ['name' => __('имя'), 'body' => __('комментарий')];
     }
 
     public function post(): void
@@ -49,7 +49,7 @@ class VideoComments extends Component
 
         $key = 'comment:'.request()->ip();
         if (RateLimiter::tooManyAttempts($key, 3)) {
-            $this->addError('body', 'Слишком часто. Попробуйте через '.RateLimiter::availableIn($key).' сек.');
+            $this->addError('body', __('Слишком часто. Попробуйте через :seconds сек.', ['seconds' => RateLimiter::availableIn($key)]));
 
             return;
         }
@@ -68,7 +68,7 @@ class VideoComments extends Component
         ]);
 
         $this->reset('body');
-        $this->dispatch('toast', message: 'Комментарий опубликован');
+        $this->dispatch('toast', message: __('Комментарий опубликован'));
     }
 
     public function delete(int $id): void

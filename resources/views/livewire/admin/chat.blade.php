@@ -1,12 +1,12 @@
 <div>
     @include('partials.admin-flash')
     <div class="flex flex-wrap items-center justify-between gap-4">
-        <h1 class="text-3xl font-semibold">Модерация чата</h1>
-        <button wire:click="purgeOld" wire:confirm="Удалить все сообщения старше 30 дней?" class="btn btn-danger"><x-icon name="trash" class="size-4"/> Очистить старше 30 дней</button>
+        <h1 class="text-3xl font-semibold">{{ __('Модерация чата') }}</h1>
+        <button wire:click="purgeOld" wire:confirm="{{ __('Удалить все сообщения старше 30 дней?') }}" class="btn btn-danger"><x-icon name="trash" class="size-4"/> {{ __('Очистить старше 30 дней') }}</button>
     </div>
     <div class="card mt-6 overflow-x-auto" wire:poll.10s>
         <table class="table-yq">
-            <thead><tr><th>Автор</th><th>Сообщение</th><th>Время</th><th>IP</th><th></th></tr></thead>
+            <thead><tr><th>{{ __('Автор') }}</th><th>{{ __('Сообщение') }}</th><th>{{ __('Время') }}</th><th>IP</th><th></th></tr></thead>
             <tbody>
             @forelse($messages as $m)
                 <tr wire:key="m{{ $m->id }}">
@@ -17,7 +17,7 @@
                     <td class="text-right"><button wire:click="delete({{ $m->id }})" class="grid size-8 place-items-center rounded-lg text-ink-400 hover:bg-red-500/10 hover:text-red-400"><x-icon name="trash" class="size-4"/></button></td>
                 </tr>
             @empty
-                <tr><td colspan="5" class="py-12 text-center text-ink-400">Сообщений нет</td></tr>
+                <tr><td colspan="5" class="py-12 text-center text-ink-400">{{ __('Сообщений нет') }}</td></tr>
             @endforelse
             </tbody>
         </table>

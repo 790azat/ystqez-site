@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\SetupController;
 use App\Http\Controllers\VideoController;
@@ -8,6 +9,7 @@ use App\Livewire;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
+Route::get('/lang/{locale}', LocaleController::class)->whereIn('locale', array_keys(\App\Support\Locale::SUPPORTED))->name('locale');
 
 Route::get('/videos', Livewire\VideoCatalog::class)->name('videos.index');
 Route::get('/videos/{slug}', [VideoController::class, 'show'])->name('videos.show');

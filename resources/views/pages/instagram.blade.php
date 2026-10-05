@@ -18,13 +18,13 @@
             </div>
             <div class="flex-1">
                 <h1 class="text-3xl font-semibold">{{ '@'.config('site.instagram_handle') }}</h1>
-                <p class="mt-2 max-w-xl whitespace-pre-line text-sm text-ink-300">{{ setting('instagram_bio', 'Кадры из путешествий, закулисье выпусков и моменты между разговорами.') }}</p>
+                <p class="mt-2 max-w-xl whitespace-pre-line text-sm text-ink-300">{{ setting('instagram_bio', __('Кадры из путешествий, закулисье выпусков и моменты между разговорами.')) }}</p>
                 <div class="mt-3 flex gap-5 text-sm text-ink-400">
-                    <span><b class="text-white">{{ $posts->total() }}</b> {{ \App\Support\Ru::plural($posts->total(), ['публикация', 'публикации', 'публикаций']) }}</span>
-                    @if($followers)<span><b class="text-white">{{ \App\Support\Ru::compact((int) $followers) }}</b> подписчиков</span>@endif
+                    <span><b class="text-white">{{ $posts->total() }}</b> {{ trans_choice('публикация|публикации|публикаций', $posts->total()) }}</span>
+                    @if($followers)<span><b class="text-white">{{ compact_num((int) $followers) }}</b> {{ trans_choice('подписчик|подписчика|подписчиков', (int) $followers) }}</span>@endif
                 </div>
             </div>
-            <a href="{{ setting('instagram_url') }}" target="_blank" rel="noopener" class="btn btn-primary"><x-icon name="instagram" class="size-4"/> Подписаться</a>
+            <a href="{{ setting('instagram_url') }}" target="_blank" rel="noopener" class="btn btn-primary"><x-icon name="instagram" class="size-4"/> {{ __('Подписаться') }}</a>
         </div>
     </div>
 
@@ -37,8 +37,8 @@
             </div>
             {{ $posts->links() }}
         @else
-            <x-empty icon="image" title="Публикации скоро появятся" text="А пока все свежие кадры — в нашем профиле.">
-                <a href="{{ setting('instagram_url') }}" target="_blank" rel="noopener" class="btn btn-ghost"><x-icon name="instagram" class="size-4"/> Открыть Instagram</a>
+            <x-empty icon="image" title="{{ __('Публикации скоро появятся') }}" text="{{ __('А пока все свежие кадры — в нашем профиле.') }}">
+                <a href="{{ setting('instagram_url') }}" target="_blank" rel="noopener" class="btn btn-ghost"><x-icon name="instagram" class="size-4"/> {{ __('Открыть Instagram') }}</a>
             </x-empty>
         @endif
     </div>

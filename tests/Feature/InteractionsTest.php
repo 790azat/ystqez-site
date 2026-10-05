@@ -45,7 +45,7 @@ class InteractionsTest extends TestCase
             ->call('submit')
             ->assertHasNoErrors()
             ->assertSet('sent', true)
-            ->assertSee('Заявка отправлена');
+            ->assertSee(__('Заявка отправлена!'));
 
         $this->assertDatabaseHas('collab_requests', ['name' => 'Иван', 'type' => 'integration', 'status' => 'new']);
     }
@@ -170,7 +170,7 @@ class InteractionsTest extends TestCase
             ->call('save')
             ->assertHasNoErrors()
             ->call('sync')
-            ->assertSee('Не удалось синхронизироваться с YouTube');
+            ->assertSee(__('Не удалось синхронизироваться с YouTube:'));
 
         $this->assertSame('Из oEmbed', Video::where('youtube_id', 'dQw4w9WgXcQ')->value('title'));
 

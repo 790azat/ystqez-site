@@ -1,5 +1,5 @@
 <div x-data="{ show: false, message: '', timer: null }"
-     @toast.window="message = $event.detail.message ?? $event.detail[0]?.message ?? 'Готово'; show = true; clearTimeout(timer); timer = setTimeout(() => show = false, 2600)"
+     @toast.window="message = $event.detail.message ?? $event.detail[0]?.message ?? {{ \Illuminate\Support\Js::from(__('Готово')) }}; show = true; clearTimeout(timer); timer = setTimeout(() => show = false, 2600)"
      class="pointer-events-none fixed inset-x-0 bottom-6 z-[60] flex justify-center px-4">
     <div x-cloak x-show="show" x-transition.opacity.duration.200ms
          class="pointer-events-auto inline-flex items-center gap-2 rounded-full bg-ink-800 px-5 py-3 text-sm font-semibold shadow-2xl ring-1 ring-white/10">

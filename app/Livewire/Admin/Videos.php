@@ -96,19 +96,19 @@ class Videos extends Component
             'form.thumbnail' => ['nullable', 'url', 'max:1000'],
             'form.tags' => ['nullable', 'string', 'max:1000'],
         ], [], [
-            'form.url' => 'ссылка или ID', 'form.title' => 'название', 'form.type' => 'тип',
-            'form.thumbnail' => 'обложка', 'form.duration' => 'длительность', 'form.view_count' => 'просмотры',
+            'form.url' => __('ссылка или ID'), 'form.title' => __('название'), 'form.type' => __('тип'),
+            'form.thumbnail' => __('обложка'), 'form.duration' => __('длительность'), 'form.view_count' => __('просмотры'),
         ]);
 
         $youtubeId = Video::extractYoutubeId($this->form['url']);
         if (! $youtubeId) {
-            $this->addError('form.url', 'Не удалось распознать YouTube-ссылку или ID.');
+            $this->addError('form.url', __('Не удалось распознать YouTube-ссылку или ID.'));
 
             return;
         }
         $duplicate = Video::where('youtube_id', $youtubeId)->when($this->editingId, fn ($q) => $q->whereKeyNot($this->editingId))->exists();
         if ($duplicate) {
-            $this->addError('form.url', 'Это видео уже есть в каталоге.');
+            $this->addError('form.url', __('Это видео уже есть в каталоге.'));
 
             return;
         }
@@ -124,7 +124,7 @@ class Videos extends Component
                 $title = $title ?: (string) $meta['title'];
                 $thumbnail = $thumbnail ?: (string) $meta['thumbnail'];
             } else {
-                $note = ' (YouTube недоступен — данные не подтянулись, заполните вручную)';
+                $note = ' '.__('(YouTube недоступен — данные не подтянулись, заполните вручную)');
             }
         }
         if (str_contains($this->form['url'], '/shorts/') && ! $video->exists) {
@@ -133,7 +133,7 @@ class Videos extends Component
 
         $video->fill([
             'youtube_id' => $youtubeId,
-            'title' => $title !== '' ? $title : 'Видео '.$youtubeId,
+            'title' => $title !== '' ? $title : 'Video '.$youtubeId,
             'description' => $this->form['description'] ?: null,
             'type' => $this->form['type'],
             'published_at' => $this->form['published_at'] ? Carbon::parse($this->form['published_at']) : ($video->published_at ?? now()),
@@ -148,7 +148,7 @@ class Videos extends Component
 
         $this->showForm = false;
         $this->editingId = null;
-        session()->flash('ok', 'Видео сохранено'.$note);
+        session()->flash('ok', __('Видео сохранено').$note);
     }
 
     public function toggleFeatured(int $id): void
@@ -166,16 +166,16 @@ class Videos extends Component
     public function delete(int $id): void
     {
         Video::whereKey($id)->delete();
-        session()->flash('ok', 'Видео удалено');
+        session()->flash('ok', __('Видео удалено'));
     }
 
     public function sync(YouTubeService $yt): void
     {
         try {
             $r = $yt->syncRss(config('site.youtube_channel_id'));
-            session()->flash('ok', "Синхронизация завершена: новых — {$r['created']}, обновлено — {$r['updated']}.");
+            session()->flash('ok', __('Синхронизация завершена: новых — :created, обновлено — :updated.', ['created' => $r['created'], 'updated' => $r['updated']]));
         } catch (Throwable $e) {
-            session()->flash('error', 'Не удалось синхронизироваться с YouTube: '.$e->getMessage());
+            session()->flash('error', __('Не удалось синхронизироваться с YouTube:').' '.$e->getMessage());
         }
     }
 

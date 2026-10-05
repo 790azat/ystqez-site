@@ -44,11 +44,11 @@ class CategoryShow extends Component
         $this->validate([
             'title' => ['required', 'string', 'min:4', 'max:200'],
             'body' => ['required', 'string', 'min:5', 'max:10000'],
-        ], [], ['title' => 'заголовок', 'body' => 'текст']);
+        ], [], ['title' => __('заголовок'), 'body' => __('текст')]);
 
         $key = 'topic:'.auth()->id();
         if (RateLimiter::tooManyAttempts($key, 3)) {
-            $this->addError('title', 'Слишком много новых тем. Попробуйте через пару минут.');
+            $this->addError('title', __('Слишком много новых тем. Попробуйте через пару минут.'));
 
             return;
         }
@@ -76,6 +76,6 @@ class CategoryShow extends Component
                 ->where('forum_category_id', $this->category->id)
                 ->orderByDesc('is_pinned')->orderByDesc('last_post_at')
                 ->paginate(20),
-        ])->title($this->category->name.' — Форум');
+        ])->title($this->category->name.' — '.__('Форум'));
     }
 }

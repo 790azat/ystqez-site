@@ -1,9 +1,9 @@
 @if ($paginator->hasPages())
-<nav role="navigation" aria-label="Пагинация" class="mt-10 flex items-center justify-center gap-1.5">
+<nav role="navigation" aria-label="{{ __('Пагинация') }}" class="mt-10 flex items-center justify-center gap-1.5">
     @if ($paginator->onFirstPage())
         <span class="grid size-10 place-items-center rounded-full text-ink-600"><x-icon name="arrow-left" class="size-4"/></span>
     @else
-        <a href="{{ $paginator->previousPageUrl() }}" rel="prev" class="grid size-10 place-items-center rounded-full ring-1 ring-white/10 hover:bg-white/5" aria-label="Назад"><x-icon name="arrow-left" class="size-4"/></a>
+        <a href="{{ $paginator->previousPageUrl() }}" rel="prev" class="grid size-10 place-items-center rounded-full ring-1 ring-white/10 hover:bg-white/5" aria-label="{{ __('Назад') }}"><x-icon name="arrow-left" class="size-4"/></a>
     @endif
     @if(isset($elements))
         @foreach ($elements as $element)
@@ -20,7 +20,7 @@
         @endforeach
     @endif
     @if ($paginator->hasMorePages())
-        <a href="{{ $paginator->nextPageUrl() }}" rel="next" class="grid size-10 place-items-center rounded-full ring-1 ring-white/10 hover:bg-white/5" aria-label="Вперёд"><x-icon name="arrow-right" class="size-4"/></a>
+        <a href="{{ $paginator->nextPageUrl() }}" rel="next" class="grid size-10 place-items-center rounded-full ring-1 ring-white/10 hover:bg-white/5" aria-label="{{ __('Вперёд') }}"><x-icon name="arrow-right" class="size-4"/></a>
     @else
         <span class="grid size-10 place-items-center rounded-full text-ink-600"><x-icon name="arrow-right" class="size-4"/></span>
     @endif

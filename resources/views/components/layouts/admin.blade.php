@@ -1,22 +1,22 @@
 @props(['title' => null])
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    @include('partials.head', ['title' => $title ?? 'Админка', 'description' => null, 'ogImage' => null])
+    @include('partials.head', ['title' => $title ?? __('Админка'), 'description' => null, 'ogImage' => null])
     <meta name="robots" content="noindex">
 </head>
 <body class="min-h-screen">
 @php
     $newCollabs = \App\Models\CollabRequest::where('status', 'new')->count();
     $items = [
-        ['admin.dashboard', 'Дашборд', 'grid', null],
-        ['admin.videos', 'Видео', 'film', null],
-        ['admin.collabs', 'Заявки', 'inbox', $newCollabs ?: null],
-        ['admin.forum', 'Форум', 'users', null],
-        ['admin.chat', 'Чат', 'chat', null],
-        ['admin.comments', 'Комментарии', 'reply', null],
-        ['admin.users', 'Пользователи', 'user', null],
-        ['admin.settings', 'Настройки', 'settings', null],
+        ['admin.dashboard', __('Дашборд'), 'grid', null],
+        ['admin.videos', __('Видео'), 'film', null],
+        ['admin.collabs', __('Заявки'), 'inbox', $newCollabs ?: null],
+        ['admin.forum', __('Форум'), 'users', null],
+        ['admin.chat', __('Чат'), 'chat', null],
+        ['admin.comments', __('Комментарии'), 'reply', null],
+        ['admin.users', __('Пользователи'), 'user', null],
+        ['admin.settings', __('Настройки'), 'settings', null],
     ];
 @endphp
 <div class="lg:grid lg:grid-cols-[250px_minmax(0,1fr)]">
@@ -33,14 +33,15 @@
                 </a>
             @endforeach
             <a href="{{ route('home') }}" class="flex shrink-0 items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-ink-400 hover:bg-white/5 hover:text-white lg:mt-4">
-                <x-icon name="arrow-left" class="size-4"/> На сайт
+                <x-icon name="arrow-left" class="size-4"/> {{ __('На сайт') }}
             </a>
         </nav>
     </aside>
     <main class="min-w-0 p-4 sm:p-8">
         <div class="mb-6 flex items-center justify-end gap-3 text-sm text-ink-400">
+            @include('partials.lang-switch', ['class' => 'mr-auto'])
             <span class="avatar size-8 text-xs">{{ auth()->user()->initials() }}</span> {{ auth()->user()->name }}
-            <form method="POST" action="{{ route('logout') }}">@csrf<button class="btn btn-ghost btn-sm"><x-icon name="logout" class="size-3.5"/> Выйти</button></form>
+            <form method="POST" action="{{ route('logout') }}">@csrf<button class="btn btn-ghost btn-sm"><x-icon name="logout" class="size-3.5"/> {{ __('Выйти') }}</button></form>
         </div>
         {{ $slot }}
     </main>

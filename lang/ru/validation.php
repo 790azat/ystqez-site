@@ -9,6 +9,7 @@ return [
     'email' => 'Укажите корректный email.',
     'in' => 'Выбрано недопустимое значение поля :attribute.',
     'integer' => 'Поле :attribute должно быть целым числом.',
+    'json' => 'Поле :attribute должно быть корректным JSON.',
     'max' => [
         'numeric' => 'Поле :attribute не может быть больше :max.',
         'string' => 'Поле :attribute не может быть длиннее :max символов.',

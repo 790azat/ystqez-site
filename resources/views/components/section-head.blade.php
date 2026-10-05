@@ -1,4 +1,5 @@
-@props(['kicker' => null, 'title', 'href' => null, 'link' => 'Смотреть все'])
+@props(['kicker' => null, 'title', 'href' => null, 'link' => null])
+@php($link ??= __('Смотреть все'))
 <div class="mb-8 flex items-end justify-between gap-4">
     <div>
         @if($kicker)<p class="kicker mb-2"><span class="h-px w-6 bg-ember-500"></span>{{ $kicker }}</p>@endif

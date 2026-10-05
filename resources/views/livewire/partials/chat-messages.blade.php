@@ -8,7 +8,7 @@
                     <span class="text-xs font-bold {{ $mine ? 'text-ember-300' : 'text-sun-400' }}">{{ $m->nickname }}</span>
                     <span class="text-[10px] text-ink-400">{{ $m->created_at->format('H:i') }}</span>
                     @if(auth()->user()?->is_admin)
-                        <button wire:click="delete({{ $m->id }})" class="text-ink-400 opacity-0 transition hover:text-red-400 group-hover:opacity-100" title="Удалить"><x-icon name="trash" class="size-3"/></button>
+                        <button wire:click="delete({{ $m->id }})" class="text-ink-400 opacity-0 transition hover:text-red-400 group-hover:opacity-100" title="{{ __('Удалить') }}"><x-icon name="trash" class="size-3"/></button>
                     @endif
                 </div>
                 <p class="break-words text-sm leading-relaxed text-ink-100">{{ $m->body }}</p>
@@ -18,7 +18,7 @@
         <div class="grid h-full place-items-center py-16 text-center">
             <div>
                 <x-icon name="chat" class="mx-auto size-10 text-ink-600"/>
-                <p class="mt-3 text-sm text-ink-400">Тут пока тихо. Напишите первое сообщение!</p>
+                <p class="mt-3 text-sm text-ink-400">{{ __('Тут пока тихо. Напишите первое сообщение!') }}</p>
             </div>
         </div>
     @endforelse

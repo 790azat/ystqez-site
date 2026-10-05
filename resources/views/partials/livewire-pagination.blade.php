@@ -1,10 +1,10 @@
 @php($pageName = $paginator->getPageName())
 @if ($paginator->hasPages())
-<nav role="navigation" aria-label="Пагинация" class="mt-10 flex items-center justify-center gap-1.5">
+<nav role="navigation" aria-label="{{ __('Пагинация') }}" class="mt-10 flex items-center justify-center gap-1.5">
     @if ($paginator->onFirstPage())
         <span class="grid size-10 place-items-center rounded-full text-ink-600"><x-icon name="arrow-left" class="size-4"/></span>
     @else
-        <button type="button" wire:click="previousPage('{{ $pageName }}')" wire:loading.attr="disabled" class="grid size-10 place-items-center rounded-full ring-1 ring-white/10 hover:bg-white/5" aria-label="Назад"><x-icon name="arrow-left" class="size-4"/></button>
+        <button type="button" wire:click="previousPage('{{ $pageName }}')" wire:loading.attr="disabled" class="grid size-10 place-items-center rounded-full ring-1 ring-white/10 hover:bg-white/5" aria-label="{{ __('Назад') }}"><x-icon name="arrow-left" class="size-4"/></button>
     @endif
 
     @if(isset($elements))
@@ -25,7 +25,7 @@
     @endif
 
     @if ($paginator->hasMorePages())
-        <button type="button" wire:click="nextPage('{{ $pageName }}')" wire:loading.attr="disabled" class="grid size-10 place-items-center rounded-full ring-1 ring-white/10 hover:bg-white/5" aria-label="Вперёд"><x-icon name="arrow-right" class="size-4"/></button>
+        <button type="button" wire:click="nextPage('{{ $pageName }}')" wire:loading.attr="disabled" class="grid size-10 place-items-center rounded-full ring-1 ring-white/10 hover:bg-white/5" aria-label="{{ __('Вперёд') }}"><x-icon name="arrow-right" class="size-4"/></button>
     @else
         <span class="grid size-10 place-items-center rounded-full text-ink-600"><x-icon name="arrow-right" class="size-4"/></span>
     @endif

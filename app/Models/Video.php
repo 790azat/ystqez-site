@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Support\Ru;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -105,7 +104,7 @@ class Video extends Model
 
     public function getViewsHumanAttribute(): string
     {
-        return Ru::compact($this->view_count).' '.Ru::plural($this->view_count, ['просмотр', 'просмотра', 'просмотров']);
+        return trans_choice(':count просмотр|:count просмотра|:count просмотров', (int) $this->view_count, ['count' => compact_num($this->view_count)]);
     }
 
     /** Title without technical hashtags like #shorts. */
@@ -118,7 +117,7 @@ class Video extends Model
 
     public function getTypeLabelAttribute(): string
     {
-        return self::TYPES[$this->type] ?? 'Видео';
+        return __(self::TYPES[$this->type] ?? 'Видео');
     }
 
     /** Escaped description with clickable links and timestamps. */

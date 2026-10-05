@@ -45,7 +45,7 @@ class Collabs extends Component
     {
         $this->validate(['note' => ['nullable', 'string', 'max:5000']]);
         CollabRequest::whereKey($id)->update(['admin_note' => $this->note]);
-        session()->flash('ok', 'Заметка сохранена');
+        session()->flash('ok', __('Заметка сохранена'));
     }
 
     public function delete(int $id): void
