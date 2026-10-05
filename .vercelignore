@@ -1,0 +1,17 @@
+/vendor
+/node_modules
+/tests
+/storage/logs/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/public/media
+/public/hot
+/database/database.sqlite
+/database/*.sqlite
+.env
+.env.backup
+.phpunit.result.cache
+/.phpunit.cache
+/.idea
+/.vscode
