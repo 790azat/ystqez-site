@@ -17,8 +17,9 @@
 <meta property="og:url" content="{{ url()->current() }}">
 @if($ogImage)<meta property="og:image" content="{{ $ogImage }}">@endif
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="{{ media_url('media/brand/favicon-64.png') }}" type="image/png">
 <link rel="alternate icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="{{ media_url('media/brand/apple-touch-icon.png') }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://i.ytimg.com">

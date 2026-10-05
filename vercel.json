@@ -27,7 +27,7 @@
             }
         },
         {
-            "src": "/(favicon\\.ico|favicon\\.svg|robots\\.txt)",
+            "src": "/(favicon\\.ico|robots\\.txt)",
             "dest": "/$1"
         },
         {
